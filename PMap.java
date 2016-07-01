@@ -4,6 +4,7 @@
 package pMap.phaseB;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * PMap stands for Paired Map. A map is a collection of key value pairs, e.g.,
@@ -117,24 +118,29 @@ public class PMap implements Map<Integer,String> {
 
 	@Override
 	public void putAll(Map<? extends Integer, ? extends String> m) {
-		ArrayList<Integer> keys = (ArrayList<Integer>) m.keySet();
-		for(int i = 0;i < keys.size();i++)
+		Set<Integer> keys = (Set<Integer>) m.keySet();
+		Iterator iterator = keys.iterator(); 
+		while(iterator.hasNext())
 		{
+			Integer key =  (Integer) iterator.next();
+			
 			boolean flag = false;
 			for(int j = 0;j < map.size();j++)
 			{
-				if(map.get(j).getKey() == keys.get(i))
+				if(map.get(j).getKey() == key)
 				{
 					flag = true;
-					map.get(i).setValue(m.get(keys.get(i)));
+					map.get(j).setValue(m.get(key));
 				}
 			}
 			if(flag == false)
 			{
-				MyEntry temp = new MyEntry(keys.get(i),m.get(keys.get(i)));
+				MyEntry temp = new MyEntry(key,m.get(key));
 				map.add(temp);
 			}
+			
 		}
+		
 	}
 
 	@Override
@@ -177,7 +183,4 @@ public class PMap implements Map<Integer,String> {
 		
 		return entrySet;
 	}
-
-	
-
 }
